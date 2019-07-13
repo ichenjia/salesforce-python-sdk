@@ -32,3 +32,6 @@ class SObject(object):
 
     def post(self, data, **kwargs):
         raise NotImplementedError
+        
+    def merge(self, data):
+        raise NotImplementedError
