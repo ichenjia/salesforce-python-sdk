@@ -152,7 +152,17 @@ class SoapSObject(SObject):
             raise TypeError("'create' require a parameter type 'list'")
 
         return self.post(data, SoapSObject.Action.CREATE)
+    
+    @utils.authenticate
+    def merge(self, master, recordToMergeIds):
+        if not isinstance(master, str):
+            raise TypeError("'merge' require the master be type 'str'")
+        if not isinstance(recordToMergeIds, list):
+            raise TypeError("'merge' require the recordToMergeIds be type 'list'")
+        return self.post({"master":master, "others":recordToMergeIds}, SoapSObject.Action.MERGE)
 
+    
+    
     @utils.authenticate
     def update(self, data):
         if not isinstance(data, list):
@@ -187,6 +197,9 @@ class SoapSObject(SObject):
 
         elif action == SoapSObject.Action.DELETE:
             body = utils.get_soap_delete_body(data)
+            
+        elif action == SoapSObject.Action.MERGE:
+            body = utils.get_soap_merge_body(data)            
 
         else:
             raise ValueError("'action' " + action + " is not supported!")
@@ -224,3 +237,4 @@ class SoapSObject(SObject):
         CREATE = 'create'
         DELETE = 'delete'
         UPDATE = 'update'
+        MERGE = 'merge'
