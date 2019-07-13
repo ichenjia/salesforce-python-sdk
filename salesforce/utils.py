@@ -112,6 +112,9 @@ def get_soap_delete_body(ids):
 
     return delete_body
 
+def get_soap_merge_body(data):
+    #TO IMPLEMENT
+    return None
 
 def get_soap_update_body(sobject, data):
     update_body = ''
